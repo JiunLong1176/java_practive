@@ -22,7 +22,10 @@ public class DemoApplication {
 		int[] flowerbed = { 0 };
 		boolean result3 = canPlaceFlowers(flowerbed, 1);
 		String result4 = reverseVowels("leetcode");
-		System.out.println("Result: " + result4);
+		String result5 = reverseWords("  hello    world  ");
+		int[] nums = { 6, 7, 1, 2 };
+		boolean result6 = increasingTriplet(nums);
+		System.out.println("Result: " + result6);
 	}
 
 	public static String mergeAlternately(String word1, String word2) {
@@ -120,5 +123,46 @@ public class DemoApplication {
 
 		return String.valueOf(finalValue);
 	}
+
+	public static String reverseWords(String s) {
+		// remove any subsequence space, first \ means split \s+, if no first \ when be
+		// split by s+ which is incorrect
+		// \s means the space and + means treat all space together as one
+		String[] splitStrings = s.split("\\s+");
+		StringBuilder finalString = new StringBuilder();
+
+		for (int i = splitStrings.length - 1; i > -1; i--) {
+			finalString.append(splitStrings[i]);
+			if (i != 0) {
+				finalString.append(" ");
+			}
+		}
+
+		return finalString.toString();
+	}
+
+	public static boolean increasingTriplet(int[] nums) {
+		int small = Integer.MAX_VALUE;
+		int mid = Integer.MAX_VALUE;
+
+		for (int value : nums) {
+			if (small >= value) {
+				small = value;
+			} else if (mid >= value) {
+				mid = value;
+			} else {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	// public static int compress(char[] chars) {
+    //     // only one character no need show count
+	// 	// if count is more than 10 then will be 1,0
+
+
+    // }
 
 }
