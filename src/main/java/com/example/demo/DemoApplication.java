@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -19,13 +20,15 @@ public class DemoApplication {
 		String result1 = mergeAlternately("b", "f");
 		int[] candies = { 12, 1, 12 };
 		List<Boolean> result2 = kidsWithCandies(candies, 10);
-		int[] flowerbed = { 0 };
-		boolean result3 = canPlaceFlowers(flowerbed, 1);
+		int[] flowerbed = { 1, 0, 0, 0, 1 };
+		boolean result3 = canPlaceFlowers(flowerbed, 2);
 		String result4 = reverseVowels("leetcode");
 		String result5 = reverseWords("  hello    world  ");
 		int[] nums = { 6, 7, 1, 2 };
 		boolean result6 = increasingTriplet(nums);
-		System.out.println("Result: " + result6);
+		char[] chars = {'a','a','b','b','c','c','c' };
+		int result7 = compress(chars);
+		System.out.println("Result: " + result7);
 	}
 
 	public static String mergeAlternately(String word1, String word2) {
@@ -80,6 +83,7 @@ public class DemoApplication {
 			if (flowerbed[i] != 1 && i != skippedPlot) {
 				if (flowerbed.length == 1 && flowerbed[i] == 0) {
 					totalAvailablePlot++;
+					skippedPlot = i + 1;
 				} else if (i == 0 && flowerbed[i + 1] == 0) {
 					totalAvailablePlot++;
 					skippedPlot = i + 1;
@@ -158,11 +162,34 @@ public class DemoApplication {
 		return false;
 	}
 
-	// public static int compress(char[] chars) {
-    //     // only one character no need show count
-	// 	// if count is more than 10 then will be 1,0
+	public static int compress(char[] chars) {
+		int firstIndex = 0;
+		int lastIndex = chars.length;
+		List<String> finalChars = new LinkedList<>();
 
+		while (firstIndex < lastIndex) {
+			finalChars.add(Character.toString(chars[firstIndex]));
+			int charCount = 0;
+			char currentChar = chars[firstIndex];
+			for (int i = firstIndex; i < chars.length; i++) {
+				if (currentChar == chars[i]) {
+					charCount++;
+				}
+			}
+			firstIndex += charCount;
+			if (charCount != 1) {
+				if (charCount > 9) {
+					for (String value : String.valueOf(charCount).split("")) {
+						finalChars.add(value);
+					}
+				} else {
+					finalChars.add(String.valueOf(charCount));
+				}
+			}
+			charCount = 0;
+		}
 
-    // }
+		return finalChars.size();
+	}
 
 }
